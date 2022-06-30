@@ -6,6 +6,8 @@ package binancepay
 
 import "github.com/shopspring/decimal"
 
+const NotiBizTypeOrder NotiBizType = "PAY"
+
 type OrderNoti struct {
 	MerchantTradeNo string              `json:"merchantTradeNo"`
 	TotalFee        decimal.Decimal     `json:"totalFee"`

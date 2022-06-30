@@ -4,6 +4,8 @@
 
 package binancepay
 
+const NotiBizTypePayout NotiBizType = "PAYOUT"
+
 type PayoutNoti struct {
 	RequestId   string `json:"requestId"`
 	BatchStatus string `json:"batchStatus"`

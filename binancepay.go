@@ -53,8 +53,10 @@ func NewMerchant(apiKey, secret string, cache Cache, logger *zap.Logger) *Mercha
 	}
 }
 
+type NotiBizType string
+
 type webhookRawReq struct {
-	BizType   string      `json:"bizType"`
+	BizType   NotiBizType `json:"bizType"`
 	BizId     json.Number `json:"bizId"`
 	RawData   string      `json:"data"`
 	BizStatus string      `json:"bizStatus"`
@@ -164,6 +166,7 @@ func (m *Merchant) WebhookResponse(w http.ResponseWriter, success bool, message 
 	if success {
 		resp["returnCode"] = "SUCCESS"
 	}
+	resp["returnMessage"] = nil
 	if message != "" {
 		resp["returnMessage"] = message
 	}

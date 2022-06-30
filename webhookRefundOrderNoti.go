@@ -4,6 +4,8 @@
 
 package binancepay
 
+const NotiBizTypePayRefund NotiBizType = "PAY_REFUND"
+
 type RefundOrderNoti struct {
 	MerchantTradeNo string `json:"merchantTradeNo"`
 	ProductType     string `json:"productType"`

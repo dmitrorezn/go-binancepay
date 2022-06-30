@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
+	"net/http/httptest"
 	"strings"
 	"testing"
 	"time"
@@ -134,9 +135,23 @@ FvXTzIoctZM1IvDrCwIDAQAB
 	assert.Nil(t, err, err)
 	assert.Equal(t, "PAY_SUCCESS", rawReq.BizStatus)
 
-	var orderNoti OrderNoti
-	err = json.Unmarshal([]byte(rawReq.RawData), &orderNoti)
-	assert.Nil(t, err, err)
-	assert.Equal(t, "9825382937292", orderNoti.MerchantTradeNo)
-	assert.Equal(t, 0.88, orderNoti.TotalFee.InexactFloat64())
+	switch rawReq.BizType {
+	case NotiBizTypeOrder:
+		var orderNoti OrderNoti
+		err = json.Unmarshal([]byte(rawReq.RawData), &orderNoti)
+		assert.Nil(t, err, err)
+		assert.Equal(t, "9825382937292", orderNoti.MerchantTradeNo)
+		assert.Equal(t, 0.88, orderNoti.TotalFee.InexactFloat64())
+
+		respWriter := httptest.NewRecorder()
+		err = client.WebhookResponse(respWriter, true, "")
+		assert.Nil(t, err, err)
+		assert.Equal(t, "{\"returnCode\":\"SUCCESS\",\"returnMessage\":null}", respWriter.Body.String())
+	case NotiBizTypePayout:
+		panic("should never reach")
+	case NotiBizTypePayRefund:
+		panic("should never reach")
+	default:
+		panic("should never reach")
+	}
 }
