@@ -1,11 +1,11 @@
 # go-binancepay
 
-Binance Pay Golang SDK
+Binance Pay Golang SDK upd
 
 ### Install
 
 ~~~bash
-go get -u github.com/dcb9/go-binancepay
+go get -u github.com/dmitrorezn/go-binancepay
 ~~~
 
 ### Test
